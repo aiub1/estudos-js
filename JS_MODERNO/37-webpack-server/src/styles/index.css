@@ -1,0 +1,12 @@
+.frm-group{
+  padding:5px;
+}
+.frm-group label{
+  display: block;
+}
+ 
+.frm-group:nth-child(1){
+  border: 1px solid #CCC;
+  background: #e5e5e5;
+  padding: 10px 5px;
+}
