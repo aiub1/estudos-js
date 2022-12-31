@@ -1,6 +1,12 @@
 module.exports = class User {
-  constructor(fullName, email,) {
+  #cpf
+  constructor(fullName, email, cpf) {
     this.fullName = fullName
     this.email = email
+    this.#cpf = cpf
+  }
+
+  get cpf(){
+    return this.#cpf
   }
 }
