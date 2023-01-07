@@ -5,16 +5,16 @@ module.exports = class Loan {
   constructor(value,installmentNumber) {
     this.value = value
     this.date = new Date()
-    this.instalement = new Installment()
+    this.instalement = new Installment((value+(value*Loan.#interestFee)),installmentNumber)
   }
 
   static #interestFee = 0.08
 
-  static get interestFeeValue() {
+  get interestFeeValue() {
    return Loan.#interestFee
   }
 
   set interestFee(newInterestFee) {
-    this.#interestFee = newInterestFee/100
+    Loan.#interestFee = newInterestFee/100
   }
 }

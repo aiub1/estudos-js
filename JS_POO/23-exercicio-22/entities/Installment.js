@@ -1,5 +1,7 @@
 module.exports = class Installment {
-  constructor(value, number, situation){
-    
+  constructor(value, number){
+    this.value = value
+    this.number = number
+    this.situation = 'pendente'
   }
 }
