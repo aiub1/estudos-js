@@ -1,0 +1,30 @@
+body {
+  background-color: #363636;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  text-shadow: 1px 1px black;
+  font-weight: bold;
+}
+
+form {
+  background-color: #a7a6a6;
+  border-radius: 10px;
+  padding: 15px;
+  margin: auto;
+  width: 500px;
+  box-shadow: 3px 3px 10px rgb(0, 0, 0.363);
+}
+
+input {
+  margin-bottom: 1rem;
+}
+
+h2 {
+  margin-bottom: 3rem;
+}
+
+h1 {
+  background-color: #a7a6a6;
+  padding: 10px 10px;
+}
