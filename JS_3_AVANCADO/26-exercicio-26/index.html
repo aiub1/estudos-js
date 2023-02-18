@@ -12,18 +12,19 @@
 <body>
   <h1>Saldo Total: </h1>
   <main class="main-content" style="display: flex; gap: 4rem; margin: 1rem 2rem;">
-    <form action="#" method="post">
+    <form action="http://localhost:3000/transactions" method="post">
       <h2>Insira dados transação</h2>
-      <label for="nameTransaction">Nome: </label>
+      <label for="nameTransaction">Nome:</label>
       <input type="text" id="nameTransaction" name="name">
       <br>
-      <label for="valueTransaction">Valor: </label>
-      <input type="text" id="valueTransaction" name="value">
+      <label for="valueTransaction">Valor:</label>
+      <input type="number" id="valueTransaction" name="value">
       <br>
       <button>Salvar</button>
     </form>
-    <h2>Transações</h2>
-    <section id="transactions"></section>
+    <section id="transactions">
+      <h2>Transações</h2>
+    </section>
   </main>
 </body>
 </html>
