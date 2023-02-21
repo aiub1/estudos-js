@@ -1,9 +1,14 @@
 {
   "transactions": [
     {
-      "name": "teste",
-      "value": 6,
+      "name": "salario",
+      "value": 3450,
       "id": 1
+    },
+    {
+      "name": "faculdade",
+      "value": 689,
+      "id": 2
     }
   ]
 }

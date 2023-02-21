@@ -4,7 +4,6 @@ const form = document.querySelector('form')
 
 async function fetchTransactions() {
   const transactions = await fetch('http://localhost:3000/transactions').then(res => res.json())
-  console.log(transactions);
   transactions.forEach(renderTransactions)
 }
 
@@ -14,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function updtadeBalance(balance) {
   balanceValue += Number(balance.value)
-  console.log(balanceValue);
   balanceTitle.innerText = `Saldo Total: R$ ${balanceValue}`
 }
 
@@ -25,17 +23,30 @@ function renderTransactions(transactionData) {
 
   const description = document.createElement('h3')
   description.classList.add('transaction')
-  description.textContent = `Descrição: ${transactionData.name}` 
+  description.textContent = (`Descrição: ${transactionData.name}`) 
 
-  const valueTransaction = document.createElement('div')
+  const labelTransaction = document.createElement('label')
+  labelTransaction.htmlFor = (`id-transaction-${transactionData.id}`)
+  labelTransaction.textContent = (`Valor da transação: `)
+
+  const valueTransaction = document.createElement('input')
   valueTransaction.classList.add('transaction-value')
-  valueTransaction.textContent = `Valor: ${transactionData.value}`
+  valueTransaction.id = (`id-transaction-${transactionData.id}`)
+  valueTransaction.type = 'number'
+  valueTransaction.value = transactionData.value
 
   const idTransaction = document.createElement('div')
   idTransaction.classList.add('transaction-id')
-  idTransaction.textContent = `Id: ${transactionData.id}`
+  idTransaction.name = 'idTransaction'
+  idTransaction.textContent = (`Id: ${transactionData.id}`)
 
-  article.append(description,valueTransaction, idTransaction)
+  const deleteBtn = document.createElement('button')
+  deleteBtn.textContent =  'Apagar'
+  deleteBtn.classList.add('delete-transaction-btn')
+  deleteBtn.addEventListener('click', function() { deleteTransaction(this)})
+  const br = document.createElement('br')
+
+  article.append(description, idTransaction, labelTransaction, valueTransaction, br, deleteBtn)
   document.getElementById('transactions').appendChild(article)
   updtadeBalance(transactionData)
 }
@@ -60,3 +71,8 @@ form.addEventListener('submit', async (ev) => {
   form.reset()
   renderTransactions(savedTransaction)
 })
+
+
+async function deleteTransaction(ev) {
+  console.log(ev.parentNode.idTransaction);
+}
