@@ -1,14 +1,24 @@
 {
   "transactions": [
     {
-      "name": "salario",
-      "value": 3450,
+      "name": "Transação Inicial",
+      "value": 15000,
       "id": 1
     },
     {
-      "name": "faculdade",
-      "value": 689,
+      "name": "Aluguel",
+      "value": -2000,
       "id": 2
+    },
+    {
+      "name": "Mercado",
+      "value": 1000,
+      "id": 3
+    },
+    {
+      "name": "faculdade",
+      "value": -700,
+      "id": 4
     }
   ]
 }

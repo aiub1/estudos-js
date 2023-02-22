@@ -1,7 +1,9 @@
+// DECLARAÇÃO DE VARIAVEIS
 let balanceValue = 0
 const balanceTitle = document.querySelector('h1')
 const form = document.querySelector('form')
 
+// FUNÇÃO PARA CARREGAR PRIMEIRAS TRANSAÇÕES
 async function fetchTransactions() {
   const transactions = await fetch('http://localhost:3000/transactions').then(res => res.json())
   transactions.forEach(renderTransactions)
@@ -11,42 +13,59 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchTransactions()
 })
 
+// FUNÇÃO PARA ATUALIZAR SALDO TOTAL
 function updtadeBalance(balance) {
+  console.log(balance);
   balanceValue += Number(balance.value)
   balanceTitle.innerText = `Saldo Total: R$ ${balanceValue}`
 }
 
+// FUNÇÃO PARA CARREGAR TRANSAÇÕES NA TELA
 function renderTransactions(transactionData) {
+  // CRIANDO TAG ARTICLE
   const article = document.createElement('article')
   article.classList.add('transaction')
   article.id = `transaction-${transactionData.id}`
 
+  // CRIANDO A DESCRIÇÃO DA TRANSAÇÃO
   const description = document.createElement('h3')
   description.classList.add('transaction')
   description.textContent = (`Descrição: ${transactionData.name}`) 
 
+  // CRIANDO LABEL DE VALOR DA TRANSAÇÃO
   const labelTransaction = document.createElement('label')
   labelTransaction.htmlFor = (`id-transaction-${transactionData.id}`)
   labelTransaction.textContent = (`Valor da transação: `)
-
+  
+  // CRIANDO CAMPO INPUT COM O VALOR DA TRANSAÇÃO
   const valueTransaction = document.createElement('input')
   valueTransaction.classList.add('transaction-value')
+  valueTransaction.setAttribute('name', 'transactionValue')
   valueTransaction.id = (`id-transaction-${transactionData.id}`)
   valueTransaction.type = 'number'
   valueTransaction.value = transactionData.value
+  
+  // CRIANDO LABEL DO ID DA TRANSAÇÃO
+  const labelId = document.createElement('label')
+  labelId.htmlFor = (valueTransaction.id)
+  labelId.textContent = (`Id da transação: `)
 
-  const idTransaction = document.createElement('div')
-  idTransaction.classList.add('transaction-id')
-  idTransaction.name = 'idTransaction'
-  idTransaction.textContent = (`Id: ${transactionData.id}`)
+  // CRIA SPAN COM O VALOR DO ID
+  const idTransaction = document.createElement('span')
+  idTransaction.setAttribute('name', 'transactionId')
+  idTransaction.textContent = transactionData.id
 
+  // CRIANDO BOTÃO PARA DELETAR TRANSAÇÕES
   const deleteBtn = document.createElement('button')
   deleteBtn.textContent =  'Apagar'
   deleteBtn.classList.add('delete-transaction-btn')
   deleteBtn.addEventListener('click', function() { deleteTransaction(this)})
-  const br = document.createElement('br')
 
-  article.append(description, idTransaction, labelTransaction, valueTransaction, br, deleteBtn)
+  // TAGS BR PARA QUEBRARA LINHA
+  const br1 = document.createElement('br')
+  const br2 = document.createElement('br')
+
+  article.append(description, labelId, idTransaction, br1, labelTransaction, valueTransaction, br2, deleteBtn)
   document.getElementById('transactions').appendChild(article)
   updtadeBalance(transactionData)
 }
@@ -74,5 +93,15 @@ form.addEventListener('submit', async (ev) => {
 
 
 async function deleteTransaction(ev) {
-  console.log(ev.parentNode.idTransaction);
+  const section = ev.parentNode
+  const sectionValue = Number(section.children.transactionValue.value)
+  const id = Number(section.children.transactionId.textContent)
+  const newValue = {value: sectionValue* -1}
+
+  const respose = await fetch(`http://localhost:3000/transactions/${id}`, {
+    method: 'delete'
+  })
+
+  section.parentNode.removeChild(section)
+  updtadeBalance(newValue)
 }
