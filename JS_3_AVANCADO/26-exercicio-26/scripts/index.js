@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // FUNÇÃO PARA ATUALIZAR SALDO TOTAL
 function updtadeBalance(balance) {
-  console.log(balance);
   balanceValue += Number(balance.value)
   balanceTitle.innerText = `Saldo Total: R$ ${balanceValue}`
 }
@@ -61,11 +60,17 @@ function renderTransactions(transactionData) {
   deleteBtn.classList.add('delete-transaction-btn')
   deleteBtn.addEventListener('click', function() { deleteTransaction(this)})
 
+  // CRIANDO BOTÃO PARA ATUALIZAR TRANSAÇÕES
+  const updateBtn = document.createElement('button')
+  updateBtn.textContent =  'Atualizar'
+  updateBtn.classList.add('update-transaction-btn')
+  updateBtn.addEventListener('click', function() { updateTransaction(this)})
+
   // TAGS BR PARA QUEBRARA LINHA
   const br1 = document.createElement('br')
   const br2 = document.createElement('br')
 
-  article.append(description, labelId, idTransaction, br1, labelTransaction, valueTransaction, br2, deleteBtn)
+  article.append(description, labelId, idTransaction, br1, labelTransaction, valueTransaction, br2, deleteBtn, updateBtn)
   document.getElementById('transactions').appendChild(article)
   updtadeBalance(transactionData)
 }
@@ -104,4 +109,9 @@ async function deleteTransaction(ev) {
 
   section.parentNode.removeChild(section)
   updtadeBalance(newValue)
+}
+
+async function updateTransaction(ev) {
+  const section = ev.parentNode
+  
 }
