@@ -29,7 +29,8 @@ function renderTransactions(transactionData) {
   // CRIANDO A DESCRIÇÃO DA TRANSAÇÃO
   const description = document.createElement('h3')
   description.classList.add('transaction')
-  description.textContent = (`Descrição: ${transactionData.name}`) 
+  description.textContent = (`Descrição: ${transactionData.name}`)
+  description.setAttribute('name','transactionDescription')
 
   // CRIANDO LABEL DE VALOR DA TRANSAÇÃO
   const labelTransaction = document.createElement('label')
@@ -113,5 +114,20 @@ async function deleteTransaction(ev) {
 
 async function updateTransaction(ev) {
   const section = ev.parentNode
-  
+  const id = Number(section.children.transactionId.textContent)
+  const valueTransaction = Number(section.children.transactionValue.value)
+  const nameTransaction = section.children.transactionDescription.textContent
+
+  const transactionData = {
+    name: nameTransaction,
+    value: valueTransaction
+  }
+
+  const response = await fetch(`http://localhost:3000/transactions/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(transactionData)
+  })
 }
