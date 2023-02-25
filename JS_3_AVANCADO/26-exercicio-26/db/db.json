@@ -1,23 +1,23 @@
 {
   "transactions": [
     {
-      "name": "Descrição: Transação Inicial",
-      "value": 15000,
+      "name": "salario",
+      "value": 2500,
       "id": 1
     },
     {
-      "name": "Aluguel",
-      "value": -2000,
+      "name": "faculdade",
+      "value": -689,
       "id": 2
     },
     {
-      "name": "Mercado",
-      "value": 1000,
+      "name": "Pix vaquinha",
+      "value": -250,
       "id": 3
     },
     {
-      "name": "faculdade",
-      "value": -700,
+      "name": "INSS",
+      "value": -250,
       "id": 4
     }
   ]

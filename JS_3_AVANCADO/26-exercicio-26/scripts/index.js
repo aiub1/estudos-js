@@ -26,11 +26,17 @@ function renderTransactions(transactionData) {
   article.classList.add('transaction')
   article.id = `transaction-${transactionData.id}`
 
-  // CRIANDO A DESCRIÇÃO DA TRANSAÇÃO
-  const description = document.createElement('h3')
+  // CRIANDO LABEL DE DESCRIÇÃO DA TRANSAÇÃO
+  const labelDescription = document.createElement('label')
+  labelDescription.htmlFor = (`description-transaction-${transactionData.id}`)
+  labelDescription.textContent = (`${transactionData.id}) Descrição: `)
+
+  // CRIANDO INPUT DESCRIÇÃO DA TRANSAÇÃO
+  const description = document.createElement('input')
   description.classList.add('transaction')
-  description.textContent = (`Descrição: ${transactionData.name}`)
+  description.value = (transactionData.name)
   description.setAttribute('name','transactionDescription')
+  description.setAttribute('id',`description-transaction-${transactionData.id}`)
 
   // CRIANDO LABEL DE VALOR DA TRANSAÇÃO
   const labelTransaction = document.createElement('label')
@@ -70,9 +76,13 @@ function renderTransactions(transactionData) {
   // TAGS BR PARA QUEBRARA LINHA
   const br1 = document.createElement('br')
   const br2 = document.createElement('br')
+  const br3 = document.createElement('br')
 
-  article.append(description, labelId, idTransaction, br1, labelTransaction, valueTransaction, br2, deleteBtn, updateBtn)
-  document.getElementById('transactions').appendChild(article)
+  const p = document.createElement('p')
+
+  article.append(labelDescription,description, br1, labelId, idTransaction, br2, labelTransaction, valueTransaction, br3, deleteBtn, updateBtn)
+  p.append(article)
+  document.getElementById('transactions').appendChild(p)
   updtadeBalance(transactionData)
 }
 
@@ -116,12 +126,14 @@ async function updateTransaction(ev) {
   const section = ev.parentNode
   const id = Number(section.children.transactionId.textContent)
   const valueTransaction = Number(section.children.transactionValue.value)
-  const nameTransaction = section.children.transactionDescription.textContent
+  const nameTransaction = section.children.transactionDescription.value
 
   const transactionData = {
     name: nameTransaction,
     value: valueTransaction
   }
+
+  const currentTransaction = await fetch(`http://localhost:3000/transactions/${id}`).then(res => res.json())
 
   const response = await fetch(`http://localhost:3000/transactions/${id}`, {
     method: 'PUT',
@@ -130,4 +142,7 @@ async function updateTransaction(ev) {
     },
     body: JSON.stringify(transactionData)
   })
+  
+  const newBalance = {value: transactionData.value - currentTransaction.value}
+  updtadeBalance(newBalance)
 }
